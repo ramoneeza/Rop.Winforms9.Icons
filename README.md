@@ -4,7 +4,7 @@ Banks Icons for Winforms and .NET 9.0
 
 ## Overview
 
-**Rop.Winforms8.1.Icons** is a library for WinForms in .NET 9.0 that provides a set of customizable components and several icon libraries to help you build modern and attractive user interfaces.
+**Rop.Winforms9.Icons** is a library for WinForms in .NET 9.0 that provides a set of customizable components and several icon libraries to help you build modern and attractive user interfaces.
 
 ### Key Features:
 - Customizable components for WinForms.
