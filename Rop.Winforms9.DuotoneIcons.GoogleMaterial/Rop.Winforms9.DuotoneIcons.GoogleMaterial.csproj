@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <RootNamespace>Rop.Winforms9.DuotoneIcons.GoogleMaterial</RootNamespace>
+    <UseWinforms>true</UseWinforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Title>Rop.Winforms9.DuotoneIcons.GoogleMaterial</Title>
+	  <PackageTags>helper-classes;winform;icons;two-tone;duotone;google-material</PackageTags>
+	  <Description>DuoTone Icon classes for Winforms. Google Material</Description>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Version>1.2.0</Version>
+	  <Authors>Ramon Ordiales Plaza</Authors>
+	  <Company>Ramon Ordiales Plaza</Company>
+	  <Copyright>2024 Ramon Ordiales</Copyright>
+	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+	  <RepositoryUrl>https://api.nuget.org/v3/index.json</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="GM.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GM.bin" />
+  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Rop.Winforms9.DuotoneIcons\Rop.Winforms9.DuotoneIcons.csproj" />
+	</ItemGroup>
+</Project>

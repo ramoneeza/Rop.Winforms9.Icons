@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+	<Title>Rop.Winforms9.DuoToneIcons</Title>
+	<PackageTags>helper-classes;winform;icons;two-tone;duotone</PackageTags>
+	<Description>DuoTone Icon classes for Winforms</Description>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Version>1.2.0</Version>
+	<Authors>Ramon Ordiales Plaza</Authors>
+	<Company>Ramon Ordiales Plaza</Company>
+	<Copyright>2024 Ramon Ordiales</Copyright>
+	<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+	<RepositoryUrl>https://api.nuget.org/v3/index.json</RepositoryUrl>
+	<RootNamespace>Rop.Winforms9.DuotoneIcons</RootNamespace>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Rop.IncludeFrom" Version="1.0.12" ReferenceOutputAssembly="false">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<PackageReference Include="Rop.IncludeFrom.Annotations" Version="1.0.6" />
+
+		<PackageReference Include="Rop.Winforms9.FontsEx" Version="1.0.2" />
+
+		<PackageReference Include="Rop.Winforms9.GraphicsEx" Version="1.0.4" />
+	</ItemGroup>
+</Project>
