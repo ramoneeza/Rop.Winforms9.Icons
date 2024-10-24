@@ -12,3 +12,4 @@ public interface IEmbeddedIcons
     float DrawIconBaseLine(Graphics gr, string code, DuoToneColor iconcolor, float x, float baseline, float height);
     void DrawIconFit(Graphics gr, string code, DuoToneColor iconcolor, float x, float y, float width);
 }
+

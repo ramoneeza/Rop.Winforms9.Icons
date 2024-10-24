@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuotoneIconsTest", "Duotone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rop.Winforms9.DoutoneIconBuilder", "Rop.Winforms9.DoutoneIconBuilder\Rop.Winforms9.DoutoneIconBuilder.csproj", "{AECADE19-2EB6-4FFE-AD2C-25E7E49B36C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rop.Winforms9.ColumnsListBox", "Rop.Winforms9.ColumnsListBox\Rop.Winforms9.ColumnsListBox.csproj", "{DAAF4E68-22FA-49AA-A22E-DD5C83228E99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColumnListBoxTest", "ColumnListBoxTest\ColumnListBoxTest.csproj", "{1A636D7E-A249-4874-9308-E81E3DC4CE75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +54,14 @@ Global
 		{AECADE19-2EB6-4FFE-AD2C-25E7E49B36C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AECADE19-2EB6-4FFE-AD2C-25E7E49B36C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AECADE19-2EB6-4FFE-AD2C-25E7E49B36C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAAF4E68-22FA-49AA-A22E-DD5C83228E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAAF4E68-22FA-49AA-A22E-DD5C83228E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAAF4E68-22FA-49AA-A22E-DD5C83228E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAAF4E68-22FA-49AA-A22E-DD5C83228E99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A636D7E-A249-4874-9308-E81E3DC4CE75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A636D7E-A249-4874-9308-E81E3DC4CE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A636D7E-A249-4874-9308-E81E3DC4CE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A636D7E-A249-4874-9308-E81E3DC4CE75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

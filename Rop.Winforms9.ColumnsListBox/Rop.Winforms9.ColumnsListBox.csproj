@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <Title>Rop.Winforms9.ColumnsListBox</Title>
+	  <PackageTags>helper-classes;winform;listbox;grid</PackageTags>
+	  <Description>ColumnsListBox</Description>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Version>1.2.0</Version>
+	  <Authors>Ramon Ordiales Plaza</Authors>
+	  <Company>Ramon Ordiales Plaza</Company>
+	  <Copyright>2024 Ramon Ordiales</Copyright>
+	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+	  <RepositoryUrl>https://api.nuget.org/v3/index.json</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rop.Winforms9.ListComboBox" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rop.Winforms9.DuotoneIcons\Rop.Winforms9.DuotoneIcons.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -105,8 +105,10 @@ namespace Rop.Winforms9.DuotoneIcons.Controls
                     e.Graphics.DrawRectangle(new Pen(Color.Black), 0, 0, Width - 1, Height - 1);
                     break;
                 case BorderStyle.Fixed3D:
-                    e.Graphics.DrawLines(Pens.Gray,new PointF[]{new(0,Height-1),new(0,0),new(Width-1,0)});
-                    e.Graphics.DrawLines(Pens.White,new PointF[]{new(0,Height-1),new(Width-1,Height-1),new(Width-1,0)});
+                    var p1=BorderRaised? Pens.White : Pens.Gray;
+                    var p2=BorderRaised? Pens.Gray : Pens.White;
+                    e.Graphics.DrawLines(p1,new PointF[]{new(0,Height-1),new(0,0),new(Width-1,0)});
+                    e.Graphics.DrawLines(p2,new PointF[]{new(0,Height-1),new(Width-1,Height-1),new(Width-1,0)});
                     break;
                 default:
                     break;
@@ -122,6 +124,20 @@ namespace Rop.Winforms9.DuotoneIcons.Controls
             {
                 if (value == _borderStyle) return;
                 _borderStyle = value;
+                _doLayout();
+                Invalidate();
+            }
+        }
+
+        private bool _borderRaised;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool BorderRaised
+        {
+            get => _borderRaised;
+            set
+            {
+                _borderRaised = value;
                 _doLayout();
                 Invalidate();
             }
@@ -189,6 +205,7 @@ namespace Rop.Winforms9.DuotoneIcons.Controls
         public string[] ColumnsNames=> _columns.Select(c => c.Text).ToArray();
         public bool[] EnabledColumns => _columns.Select(c => c.Enabled).ToArray();
         public bool[] SelectablesColumns => _columns.Select(c => c.Enabled).ToArray();
+        public OrderIcon[] Columns => _columns.ToArray();
         private Padding _columnsPadding = new Padding(3);
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Padding ColumnsPadding
