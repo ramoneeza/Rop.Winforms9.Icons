@@ -4,6 +4,7 @@ namespace Rop.Winforms9.DuotoneIcons.Controls;
 internal partial class Dummy{}
 public class SwitchIcon : IconBoolLabel
 {
+    public event EventHandler? ValueChanged;
     [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
     public SwitchIcon():base()
     {
@@ -34,6 +35,23 @@ public class SwitchIcon : IconBoolLabel
         set => base.Text = value??"";
 #pragma warning restore CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
     }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public override bool Value
+    {
+        get => base.Value;
+        set
+        {
+            if (base.Value==value) return;
+            base.Value= value;
+            OnValueChanged();
+        }
+    }
+
+    protected virtual void OnValueChanged()
+    {
+        ValueChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     [DefaultValue(false)]
     public bool AutoChange { get; set; }
     protected override void OnMouseDown(MouseEventArgs e)

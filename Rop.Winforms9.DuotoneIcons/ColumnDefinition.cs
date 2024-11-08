@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,14 +78,26 @@ namespace Rop.Winforms9.DuotoneIcons
                 OnPropertyChanged(nameof(ToolTipText));
             }
         }
+        private bool _filterable = false;
+        public bool Filterable
+        {
+            get=> _filterable;
+            set
+            {
+                if (value== _filterable) return;
+                _filterable = value;
+                OnPropertyChanged(nameof(Filterable));
+            }
+        }
 
-        public ColumnDefinition(ContentAlignment textAlign, int width, string text, bool selectable,string tooltiptext)
+        public ColumnDefinition(ContentAlignment textAlign, int width, string text, bool selectable,string tooltiptext,bool filterable=false)
         {
             _textAlign = textAlign;
             _width = width;
             _text = text;
             _selectable = selectable;
             _toolTipText = tooltiptext;
+            _filterable = filterable;
         }
 
         public ColumnDefinition()
@@ -95,19 +108,21 @@ namespace Rop.Winforms9.DuotoneIcons
 
         public override string ToString()
         {
-            return $"{TextAlign}|{Width}|{Text}|{Selectable}|{ToolTipText}";
+            return $"{TextAlign}|{Width}|{Text}|{Selectable}|{ToolTipText}|{Filterable}";
         }
 
         public static ColumnDefinition? Parse(string text)
         {
             var xs = text.Split('|');
-            if (xs.Length!=5) return null;
+            if (xs.Length!=65) return null;
             if (!Enum.TryParse<ContentAlignment>(xs[0], out var textAlign) 
                 || !int.TryParse(xs[1], out var width) 
                 || !bool.TryParse(xs[3], out var selectable)
+                || !bool.TryParse(xs[5], out var filterable)
                 ) 
                 return null;
-            return new ColumnDefinition(textAlign, width, xs[2], selectable,xs[4]);
+            
+            return new ColumnDefinition(textAlign, width, xs[2], selectable,xs[4],filterable);
         }
         public static ColumnDefinition Empty { get; }= new ColumnDefinition();
 
@@ -115,7 +130,7 @@ namespace Rop.Winforms9.DuotoneIcons
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _textAlign == other._textAlign && _width == other._width && _text == other._text && _selectable == other._selectable && _toolTipText==other._toolTipText;
+            return _textAlign == other._textAlign && _width == other._width && _text == other._text && _selectable == other._selectable && _toolTipText==other._toolTipText && _filterable==other._filterable;
         }
 
         public override bool Equals(object? obj)
@@ -129,7 +144,7 @@ namespace Rop.Winforms9.DuotoneIcons
         public override int GetHashCode()
         {
             // ReSharper disable NonReadonlyMemberInGetHashCode
-            return HashCode.Combine((int)_textAlign, _width, _text, _selectable,_toolTipText);
+            return HashCode.Combine((int)_textAlign, _width, _text, _selectable,_toolTipText,_filterable);
         }
     }
 }

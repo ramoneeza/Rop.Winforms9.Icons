@@ -44,6 +44,9 @@
             columnListBox1.HeaderBorderRaised = true;
             columnListBox1.HeaderBorderStyle = BorderStyle.Fixed3D;
             columnListBox1.HeaderInteriorBorder = true;
+            // 
+            // 
+            // 
             columnListBox1.Location = new Point(85, 86);
             columnListBox1.Name = "columnListBox1";
             columnListBox1.Size = new Size(334, 261);

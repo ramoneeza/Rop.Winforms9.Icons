@@ -9,7 +9,7 @@ internal partial class Dummy
 public partial class IconBoolLabel : Label,IHasBoolIconsText
 {
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool Value
+    public virtual bool Value
     {
         get =>SelectedIcon;
         set =>SelectedIcon = value;

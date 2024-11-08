@@ -12,9 +12,8 @@ namespace Rop.Winforms9.ColumnsListBox
     {
         public event EventHandler<DrawColumnsEventArgs>? DrawColumns;
         public event EventHandler<SortItemsArg>? SortItems; 
+        public event EventHandler<MouseOverArgs>? MouseOver;
         
-        
-
         private BorderStyle _borderStyle;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public BorderStyle BorderStyle
@@ -26,7 +25,7 @@ namespace Rop.Winforms9.ColumnsListBox
                 PerformLayout();
             }
         }
-
+        protected ToolTip ToolTip = new();
         public ColumnListBox()
         {
             // Define Header
@@ -37,6 +36,7 @@ namespace Rop.Winforms9.ColumnsListBox
             Header.InteriorBorder = true;
             Header.Dock= DockStyle.Top;
             Header.TabIndex = 0;
+            Header.BackColor = _headerBackColor;
             //Define ListBox
             ListBox = new CompatibleListBox();
             ListBox.Dock = DockStyle.Fill;
@@ -44,6 +44,8 @@ namespace Rop.Winforms9.ColumnsListBox
             ListBox.BorderStyle= BorderStyle.None;
             ListBox.IntegralHeight = false;
             ListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            // ReSharper disable once VirtualMemberCallInConstructor
+            ListBox.BackColor= BackColor;
             // Add controls
             SuspendLayout();
             this.Controls.Add(ListBox);
@@ -56,6 +58,38 @@ namespace Rop.Winforms9.ColumnsListBox
             ListBox.DrawItem += ListBox_DrawItem;
             ListBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
             ListBox.MouseClick += ListBox_MouseClick;
+            ListBox.MouseMove += ListBox_MouseMove;
+            ListBox.MouseLeave += ListBox_MouseLeave;
+        }
+
+        private int _lastHoveredIndex = -1;
+        private int _lastHoveredColumn = -1;
+
+        private void ListBox_MouseMove(object? sender, MouseEventArgs e)
+        {
+            var (index, col) = GetItemColumnIndex(e.Location);
+            if (index != _lastHoveredIndex || col != _lastHoveredColumn)
+            {
+                _lastHoveredIndex = index;
+                _lastHoveredColumn = col;
+                ToolTip.Hide(ListBox);
+                OnMouseOver();
+            }
+        }
+
+        private void ListBox_MouseLeave(object? sender, EventArgs e)
+        {
+            _lastHoveredIndex = -1;
+            _lastHoveredColumn = -1;
+            ToolTip.Hide(ListBox);
+            OnMouseOver();
+        }
+
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            ListBox.BackColor = BackColor;
+            Header.BackColor = _headerBackColor;
         }
 
         private void ListBox_DrawItem(object? sender, DrawItemEventArgs e)

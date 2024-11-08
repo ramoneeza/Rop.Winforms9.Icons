@@ -69,10 +69,10 @@ public class ColumnDefinitionConverter : TypeConverter
             }
             if (destinationType == typeof(InstanceDescriptor))
             {
-                ConstructorInfo? ctor = typeof(ColumnDefinition).GetConstructor(new Type[] { typeof(ContentAlignment), typeof(int),typeof(string),typeof(bool),typeof(string) });
+                ConstructorInfo? ctor = typeof(ColumnDefinition).GetConstructor(new Type[] { typeof(ContentAlignment), typeof(int),typeof(string),typeof(bool),typeof(string),typeof(bool) });
                 if (ctor != null)
                 {
-                    return new InstanceDescriptor(ctor, new object[] { pt.TextAlign, pt.Width,pt.Text,pt.Selectable,pt.ToolTipText });
+                    return new InstanceDescriptor(ctor, new object[] { pt.TextAlign, pt.Width,pt.Text,pt.Selectable,pt.ToolTipText,pt.Filterable });
                 }
             }
         }
@@ -94,12 +94,13 @@ public class ColumnDefinitionConverter : TypeConverter
         object? x3= propertyValues["Text"];
         object? x4 = propertyValues["Selectable"];
         object? x5 = propertyValues["ToolTipText"];
-        
-        if (x1 is not ContentAlignment ca || x2 is not int w || x3 is not string t || x4 is not bool s || x5 is not string ttt )
+        object? x6= propertyValues["Filterable"];
+
+        if (x1 is not ContentAlignment ca || x2 is not int w || x3 is not string t || x4 is not bool s || x5 is not string ttt || x6 is not bool ff )
         {
             throw new ArgumentException("PropertyValueInvalidEntry");
         }
-        return new ColumnDefinition(ca,w,t,s,ttt);
+        return new ColumnDefinition(ca,w,t,s,ttt,ff);
     }
     public override bool GetCreateInstanceSupported(ITypeDescriptorContext? context)
     {
@@ -108,7 +109,7 @@ public class ColumnDefinitionConverter : TypeConverter
     public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext? context, object value, Attribute[]? attributes)
     {
         PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(ColumnDefinition), attributes);
-        return props.Sort(new string[] { "TextAlign", "Width","Text","Selectable","ToolTipText" });
+        return props.Sort(new string[] { "TextAlign", "Width","Text","Selectable","ToolTipText","Filterable" });
     }
     public override bool GetPropertiesSupported(ITypeDescriptorContext? context)
     {

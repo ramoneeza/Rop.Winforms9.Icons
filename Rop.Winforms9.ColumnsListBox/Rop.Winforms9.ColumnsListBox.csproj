@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
@@ -9,7 +9,7 @@
 	  <PackageTags>helper-classes;winform;listbox;grid</PackageTags>
 	  <Description>ColumnsListBox</Description>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <Version>1.2.0</Version>
+	  <Version>1.2.8</Version>
 	  <Authors>Ramon Ordiales Plaza</Authors>
 	  <Company>Ramon Ordiales Plaza</Company>
 	  <Copyright>2024 Ramon Ordiales</Copyright>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rop.Winforms9.ListComboBox" Version="1.0.1" />
+    <PackageReference Include="Rop.Winforms9.ListComboBox" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

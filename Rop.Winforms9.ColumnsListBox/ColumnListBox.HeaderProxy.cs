@@ -16,8 +16,13 @@ namespace Rop.Winforms9.ColumnsListBox
        public IBankIcon? BankIcon
        {
            get => Header.BankIcon;
-           set => Header.BankIcon = value;
+           set
+           {
+               Header.BankIcon = value;
+               Header.Invalidate();
+           }
        }
+
        [DefaultValue(false)]
        public bool HeaderBorderRaised
         {
@@ -36,12 +41,18 @@ namespace Rop.Winforms9.ColumnsListBox
             get => Header.ColumnDefinitions;
             set => Header.ColumnDefinitions = value;
         }
+        private Color _headerBackColor=SystemColors.Control;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color HeaderBackColor
         {
-            get => Header.BackColor;
-            set => Header.BackColor = value;
+            get => _headerBackColor;
+            set
+            {
+                _headerBackColor = value;
+                Header.BackColor = _headerBackColor;
+            }
         }
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Padding ColumnsPadding
         {
