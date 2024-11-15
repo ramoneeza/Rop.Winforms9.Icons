@@ -1,4 +1,6 @@
-﻿namespace ColumnListBoxTest
+﻿using Rop.Winforms9.ColumnsListBox;
+
+namespace ColumnListBoxTest
 {
     partial class Form1
     {
@@ -36,20 +38,21 @@
             // 
             columnListBox1.BankIcon = materialDesignBank1;
             columnListBox1.BorderStyle = BorderStyle.Fixed3D;
-            columnListBox1.ColumnDefinitions.Add(new Rop.Winforms9.DuotoneIcons.ColumnDefinition(ContentAlignment.MiddleLeft, 50, "Id", true, ""));
-            columnListBox1.ColumnDefinitions.Add(new Rop.Winforms9.DuotoneIcons.ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Nombre", true, ""));
-            columnListBox1.ColumnDefinitions.Add(new Rop.Winforms9.DuotoneIcons.ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Apellidos", true, ""));
+            columnListBox1.ColumnDefinitions.Add(new ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Hola", true, "Un saludo", false,true,50));
+            columnListBox1.ColumnDefinitions.Add(new ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Adios", true, "Una Despedida", false, true, 50));
+            columnListBox1.ColumnDefinitions.Add(new ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Descripcion", true, "", true, true, 50));
+            columnListBox1.ColumnDefinitions.Add(new ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Habitacion", true, "", false,true, 50));
+            columnListBox1.ColumnDefinitions.Add(new ColumnDefinition(ContentAlignment.MiddleLeft, 100, "Acción", false, "", false, false, 50));
             columnListBox1.ColumnsPadding = new Padding(3);
             columnListBox1.HeaderBackColor = SystemColors.Control;
             columnListBox1.HeaderBorderRaised = true;
             columnListBox1.HeaderBorderStyle = BorderStyle.Fixed3D;
             columnListBox1.HeaderInteriorBorder = true;
-            // 
-            // 
-            // 
+            columnListBox1.ItemBackgroundColor = Color.White;
+            columnListBox1.ItemBackgroundColorAlt = Color.Empty;
             columnListBox1.Location = new Point(85, 86);
             columnListBox1.Name = "columnListBox1";
-            columnListBox1.Size = new Size(334, 261);
+            columnListBox1.Size = new Size(627, 261);
             columnListBox1.TabIndex = 2;
             columnListBox1.Text = "columnListBox1";
             columnListBox1.SortItems += columnListBox1_SortItems;

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using Rop.Winforms9.ColumnsListBox;
 using Rop.Winforms9.ListComboBox;
 
 namespace ColumnListBoxTest
@@ -7,8 +9,17 @@ namespace ColumnListBoxTest
         public Form1()
         {
             InitializeComponent();
-            columnListBox1.Items.AddRange(new MiRecord(0, "Juan", "Perez"), new MiRecord(1, "Ana", "López"), new MiRecord(2, "Tomás", "Rodríguez"), new MiRecord(3, "Ángel", "Zamorano"));
+            columnListBox1.SetItems(new MiRecord(0, "Juan", "Perez"), new MiRecord(1, "Ana", "López"), new MiRecord(2, "Tomás", "Rodríguez"), new MiRecord(3, "Ángel", "Zamorano"),new MiRecord(4,"Ana","Rodríguez"),new MiRecord(5,"Tomás","López"));
             columnListBox1.DrawColumns += ColumnListBox1_DrawColumns;
+            columnListBox1.ColumnFilterClick += ColumnListBox1_ColumnFilterClick;
+        }
+
+        private void ColumnListBox1_ColumnFilterClick(object? sender, ColumnFilterClickArgs e)
+        {
+            var apellidos=e.Items.OfType<MiRecord>().Select(a => a.Apellidos).Distinct().ToArray();
+            var active = e.ActiveFilter.Split(',');
+            var res=columnListBox1.ShowFilterDialog(e.Column.ColumnIndex, true, apellidos, active);
+            e.ActiveFilter = string.Join(',', res);
         }
 
         private void ColumnListBox1_DrawColumns(object? sender, Rop.Winforms9.ColumnsListBox.DrawColumnsEventArgs e)
@@ -34,15 +45,21 @@ namespace ColumnListBoxTest
 
         private void columnListBox1_SortItems(object sender, Rop.Winforms9.ColumnsListBox.SortItemsArg e)
         {
-            var preitems = e.Items.Cast<MiRecord>();
-            var items = e.SelectedColumn switch
+            var preitems = e.Items.OfType<MiRecord>();
+            var items = (e.SelectedColumn switch
             {
-                0 => preitems.OrderBy(a => a.Id),
-                1 => preitems.OrderBy(a => a.Nombre, StringComparer.OrdinalIgnoreCase).ThenBy(a=>a.Apellidos),
-                2 => preitems.OrderBy(a => a.Apellidos, StringComparer.OrdinalIgnoreCase).ThenBy(a=>a.Nombre),
+                0 => preitems.OrderBy(a => a.Id).ToList(),
+                1 => preitems.OrderBy(a => a.Nombre, StringComparer.CurrentCultureIgnoreCase).ThenBy(a=>a.Apellidos,StringComparer.CurrentCultureIgnoreCase).ToList(),
+                2 => preitems.OrderBy(a => a.Apellidos, StringComparer.CurrentCultureIgnoreCase).ThenBy(a=>a.Nombre,StringComparer.CurrentCultureIgnoreCase).ToList(),
                 _ => preitems
-            };
-            e.Items = ((e.SelectedOrder == SortOrder.Descending) ? items.Reverse() : items).ToList<object>();
+            }).ToList();
+            if (e.SelectedOrder == SortOrder.Descending) items.Reverse();
+            var activefilters=columnListBox1.ActiveFilters.Select(a => a.Split(',',StringSplitOptions.RemoveEmptyEntries)).ToArray();
+            if (activefilters[2].Any())
+            {
+                items = items.Where(a => activefilters[2].Contains(a.Apellidos)).ToList();
+            }
+            e.Items = items.ToList<object>();
         }
     }
 

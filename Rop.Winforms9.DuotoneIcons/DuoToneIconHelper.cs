@@ -2,8 +2,10 @@
 
 using Rop.Winforms9.FontsEx;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Security.Cryptography;
 using Rop.Winforms9.GraphicsEx;
+using Rop.Winforms9.GraphicsEx.Geom;
 
 namespace Rop.Winforms9.DuotoneIcons;
 
@@ -103,18 +105,23 @@ public static class DuoToneIconHelper
         }
         gr.TextRenderingHint = oldtr;
     }
-
+    
     private static void _DrawSoloIcon(Graphics gr, PointF offset, IMeasuredIcon measured, bool test = false)
     {
         if (measured.Icon==null) return;
         //test = true;
         var args = measured.Args;
-        var oldtr = gr.TextRenderingHint;
         var bounds = measured.Bounds;
-        var r = bounds.WithOffset(offset);
-        if (test) gr.FillRectangle(new SolidBrush(Color.Chartreuse), r.ToRectangleF());
-        gr.DrawIcon(measured.Icon,args.FinalIconColor, r.X, r.Y, r.Size);
+        gr.DrawSoloIcon(offset,measured.Icon,args.FinalIconColor,bounds.ToRectangleF(),test);
     }
+    public static void DrawSoloIcon(this Graphics gr, PointF offset, DuoToneIcon icon,DuoToneColor color,RectangleF bounds, bool test = false)
+    {
+        var r = bounds.DeltaPos(offset.X,offset.Y);
+        if (test) gr.FillRectangle(new SolidBrush(Color.Chartreuse), r);
+        gr.DrawIcon(icon,color, r);
+    }
+    
+    
     public static PointF AlignOffset(this ContentAlignment alignment, RectangleF outerbounds, RectangleF textbounds)
     {
         var res = textbounds.Location;

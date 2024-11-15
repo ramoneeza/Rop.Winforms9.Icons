@@ -19,15 +19,21 @@ public partial class ColumnListBox
     public event EventHandler<ItemColumnClickEventArgs> ItemColumnsClick;
     public event EventHandler<DrawItemEventArgsEx> DrawItem;
     protected CompatibleListBox ListBox { get; }
-    public CompatibleItems Items=> ListBox.Items;
-    public void SetItems(IEnumerable<object> items)
+    private List<object> _items;
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public IReadOnlyList<object> Items
     {
-        var a = ListBox.SelectedKeyString;
-        ListBox.BeginUpdate();
-        ListBox.Items.Clear();
-        ListBox.Items.AddRange(items);
-        ListBox.EndUpdate();
-        ListBox.SelectedKeyString = a;
+        get => _items;
+        private set => _items = value.ToList();
+    }
+    public void SetItems(params IEnumerable<object> items)
+    {
+        _items = items.ToList();
+        IntListOrOrderOrFilterChanged();
+    }
+    public void RefreshItems()
+    {
+        IntListOrOrderOrFilterChanged();
     }
 
     private Color _itemBackgroundColor=Color.White;
@@ -63,25 +69,7 @@ public partial class ColumnListBox
         set => ListBox.SelectedItem = value;
     }
 
-    public (int index,int column) GetItemColumnIndex(Point p)
-    {
-        var index = ListBox.IndexFromPoint(p);
-        if (index < 0) return (-1, -1);
-        var x = p.X;
-        var cs = Header.Columns;
-        var x0 = 0;
-        for (var f = 0; f < cs.Length; f++)
-        {
-            var c = cs[f];
-            var x1 = x0 + c.Width;
-            if (x >= x0 && x < x1)
-            {
-                return (index, f);
-            }
-            x0 = x1;
-        }
-        return (-1, -1);
-    }
+    
 
     protected virtual void OnDrawItem(DrawItemEventArgs e)
     {
@@ -100,7 +88,7 @@ public partial class ColumnListBox
             var c = cs[f];
             var r = new Rectangle(x, eex.Bounds.Y, c.Width, eex.Bounds.Height);
             eex.DrawBackground(r);
-            var arg = new DrawColumnsEventArgs(ListBox,eex,r,item,f, c);
+            var arg = new DrawColumnsEventArgs(ListBox,eex,r,item,c);
             OnDrawColumns(arg);
             x += c.Width;
         }
@@ -136,57 +124,16 @@ public partial class ColumnListBox
         var x=itemClickEventArgs.Location.X;
         var oi = Header.Columns.FirstOrDefault(o =>
         {
-            var x0=o.Location.X;
+            var x0=o.Bounds.X;
             var x1 = x0 + o.Width;
             return x >= x0 && x < x1;
         });
         if (oi==null) return;
         // get the bounds of the column
-        var bounds = new Rectangle(x - oi.Location.X, itemClickEventArgs.ItemBounds.Y, oi.Width,itemClickEventArgs.ItemBounds.Height);
-        var args = new ItemColumnClickEventArgs(itemClickEventArgs.Index, itemClickEventArgs.Item,itemClickEventArgs.ItemBounds,bounds, itemClickEventArgs.MouseButtons, itemClickEventArgs.Location, oi.ColumnIndex, oi);
+        var bounds = new Rectangle(x - oi.Bounds.X, itemClickEventArgs.ItemBounds.Y, oi.Width,itemClickEventArgs.ItemBounds.Height);
+        var args = new ItemColumnClickEventArgs(itemClickEventArgs.Index, itemClickEventArgs.Item,itemClickEventArgs.ItemBounds,bounds, itemClickEventArgs.MouseButtons, itemClickEventArgs.Location, oi);
         ItemColumnsClick?.Invoke(this, args);
     }
-
-    protected virtual void OnMouseOver()
-    {
-        if (_lastHoveredColumn==-1 || _lastHoveredIndex==-1) Cursor= Cursors.Default;
-        else
-        {
-            var a = new MouseOverArgs(_lastHoveredIndex, _lastHoveredColumn, Items[_lastHoveredIndex]);
-            MouseOver?.Invoke(this, a);
-            Cursor=a.CanClick?Cursors.Hand : Cursors.Default;
-            if (a.ToolTip != "")
-            {
-                var r = GetColumnBounds(_lastHoveredIndex, _lastHoveredColumn);
-                if (a.ToolTipRight)
-                    r.X += r.Width;
-                else
-                    r.Y += r.Height;
-                ToolTip.Show(a.ToolTip,ListBox,r.X,r.Y);
-            }
-            else
-                ToolTip.Hide(ListBox);
-        }
-    }
-
-    private Rectangle GetColumnBounds(int lastHoveredIndex, int lastHoveredColumn)
-    {
-        if (lastHoveredIndex < 0 || lastHoveredColumn < 0 || lastHoveredIndex >= Items.Count) return Rectangle.Empty;
-        var itemBounds = ListBox.GetItemRectangle(lastHoveredIndex);
-        var x = itemBounds.X;
-        var cs = Header.Columns;
-        for (var f = 0; f < cs.Length; f++)
-        {
-            var c = cs[f];
-            if (f == lastHoveredColumn) return new Rectangle(x, itemBounds.Y, c.Width, itemBounds.Height);
-            x += c.Width;
-        }
-        return Rectangle.Empty;
-    }
-
-    public void BeginUpdate()=> ListBox.BeginUpdate();
-
-    public void EndUpdate()=>ListBox.EndUpdate();
 }
 
     
@@ -219,16 +166,16 @@ public class ItemColumnClickEventArgs
     public Rectangle ItemBounds { get; }
     public Rectangle ColumnBounds { get; }
     public int ColumnIndex { get; }
-    public OrderIcon OrderIcon { get; }
+    public ColumnPanelColumn OrderIcon { get; }
 
     public ItemColumnClickEventArgs(int index, object? item, Rectangle itemBounds, Rectangle columnBounds,
-        MouseButtons mouseButtons, Point location, int columnIndex, OrderIcon orderIcon)
+        MouseButtons mouseButtons, Point location, ColumnPanelColumn orderIcon)
     {
         Index = index;
         Item = item;
         MouseButtons = mouseButtons;
         Location = location;
-        ColumnIndex = columnIndex;
+        ColumnIndex = orderIcon.ColumnIndex;
         OrderIcon = orderIcon;
         ItemBounds = itemBounds;
         ColumnBounds = columnBounds;

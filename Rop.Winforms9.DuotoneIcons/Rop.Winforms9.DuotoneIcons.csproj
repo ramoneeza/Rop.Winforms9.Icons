@@ -28,5 +28,7 @@
 		<PackageReference Include="Rop.Winforms9.FontsEx" Version="1.0.2" />
 
 		<PackageReference Include="Rop.Winforms9.GraphicsEx" Version="1.0.4" />
+
+		<PackageReference Include="Rop.Winforms9.Helper" Version="1.0.8" />
 	</ItemGroup>
 </Project>

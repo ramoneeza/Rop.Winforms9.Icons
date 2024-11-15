@@ -5,12 +5,14 @@ namespace Rop.Winforms9.ColumnsListBox;
 public class SortItemsArg:EventArgs{
     public int SelectedColumn { get; }
     public SortOrder SelectedOrder { get; }
+    public (int,string)[] ActiveFilter { get;}
     public List<object> Items { get; set; }
 
-    public SortItemsArg(int selectedColumn, SortOrder selectedOrder, CompatibleItems items)
+    public SortItemsArg(int selectedColumn, SortOrder selectedOrder,(int,string)[] activefilter, List<object> items)
     {
         SelectedColumn = selectedColumn;
         SelectedOrder = selectedOrder;
-        Items = items.ToList<object>();
+        ActiveFilter= activefilter;
+        Items = items;
     }
 }

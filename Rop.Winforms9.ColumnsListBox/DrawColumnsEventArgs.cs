@@ -10,16 +10,16 @@ public class DrawColumnsEventArgs
     public Rectangle Bounds { get; }
     public object? Item { get; }
     public int ColumnIndex { get; }
-    public OrderIcon OrderIcon { get; }
+    public ColumnPanelColumn OrderIcon { get; }
     public CompatibleListBox ListBox { get; }
     public Graphics Graphics => DrawItemEventArgs.Graphics;
-    public DrawColumnsEventArgs(CompatibleListBox that, DrawItemEventArgsEx drawItemEventArgs, Rectangle bounds, object? item, int i, OrderIcon orderIcon)
+    public DrawColumnsEventArgs(CompatibleListBox that, DrawItemEventArgsEx drawItemEventArgs, Rectangle bounds, object? item,ColumnPanelColumn column)
     {
         DrawItemEventArgs = drawItemEventArgs;
         Bounds = bounds;
         Item = item;
-        ColumnIndex = i;
-        OrderIcon = orderIcon;
+        ColumnIndex = column.ColumnIndex;
+        OrderIcon = column;
         ListBox = that;
     }
 
