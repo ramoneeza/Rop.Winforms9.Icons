@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Rop.IKeyValue" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Rop.Winforms9.ColumnsListBox\Rop.Winforms9.ColumnsListBox.csproj" />
     <ProjectReference Include="..\Rop.Winforms9.DuotoneIcons.GoogleMaterial\Rop.Winforms9.DuotoneIcons.GoogleMaterial.csproj" />
     <ProjectReference Include="..\Rop.Winforms9.DuotoneIcons.MaterialDesign\Rop.Winforms9.DuotoneIcons.MaterialDesign.csproj" />

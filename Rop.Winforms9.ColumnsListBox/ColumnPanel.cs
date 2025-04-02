@@ -156,10 +156,10 @@ public partial class ColumnPanel:Control, IHasBank
         get => _textRenderingHint;
         set => _setwinv(ref _textRenderingHint, value);
     }
-    public void SetActiveFilter(int columns, string filter)
+    public void SetActiveFilter(int columns, params IEnumerable<string> filter)
     {
         if (columns < 0 || columns >= NumberOfColumns) return;
-        _columns[columns].ActiveFilter = filter;
+        _columns[columns].ActiveFilter = filter.ToHashSet();
         OnFilterChanged();
     }
     protected virtual void OnFilterChanged()
@@ -194,7 +194,7 @@ public partial class ColumnPanel:Control, IHasBank
 
     private DuoToneColor _getFilterIconColor(ColumnPanelColumn column)
     {
-        if (column.ActiveFilter!="")
+        if (column.ActiveFilter.Count>0)
         {
             return IconColorActiveFilter;
         }
@@ -260,18 +260,19 @@ public class ColumnPanelOrderArgs : EventArgs
 public class ColumnPanelFilterArgs: EventArgs
 {
     public ColumnPanelColumn Column { get; }
-    public string ActiveFilter { get; set; }
+    public string[] ActiveFilter { get; set; }
     public ColumnPanelFilterArgs(ColumnPanelColumn column)
     {
         Column = column;
-        ActiveFilter = column.ActiveFilter;
+        ActiveFilter = column.ActiveFilter.ToArray();
     }
 }
 
 public class ColumnFilterClickArgs{
     private ColumnPanelFilterArgs _columnPanelFilter{ get; }
     public ColumnPanelColumn Column=> _columnPanelFilter.Column;
-    public string ActiveFilter { get=>_columnPanelFilter.ActiveFilter; set=> _columnPanelFilter.ActiveFilter = value; }
+    public int ColumnIndex => Column.ColumnIndex;
+    public string[] ActiveFilter { get=>_columnPanelFilter.ActiveFilter; set=> _columnPanelFilter.ActiveFilter = value; }
     public IReadOnlyList<object> Items { get; }
     public ColumnFilterClickArgs(ColumnPanelFilterArgs args, IReadOnlyList<object> items)
     {

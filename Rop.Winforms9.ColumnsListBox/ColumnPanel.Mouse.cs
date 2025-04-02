@@ -123,7 +123,7 @@ public partial class ColumnPanel
                 {
                     var args=new ColumnPanelFilterArgs(col);
                     ColumnFilterClick?.Invoke(this, args);
-                    col.ActiveFilter = args.ActiveFilter;
+                    col.ActiveFilter = args.ActiveFilter.ToHashSet();
                 }
                 break;
             case ColumnHit.Resize:

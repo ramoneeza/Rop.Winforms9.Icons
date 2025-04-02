@@ -70,5 +70,10 @@ public partial class ColumnListBox
         set => Header.SelectableCursor = value;
     }
 
-    public string[] ActiveFilters => Header.Columns.Select(c => c.ActiveFilter).ToArray();
+    public IReadOnlySet<string>[] ActiveFilters => Header.Columns.Select(c => c.ActiveFilter).ToArray();
+
+    public void SetOrder(int columns, bool descending = false)
+    {
+        Header.SetSelected(columns, descending);
+    }
 }

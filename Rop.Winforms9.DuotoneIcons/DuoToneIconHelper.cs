@@ -46,6 +46,7 @@ public static class DuoToneIconHelper
         gr.DrawIcon(icon, iconcolor, new RectangleF(x, y, iconsize.Width, iconsize.Height));
         return iconsize.Width;
     }
+    
     public static float DrawIconBaseline(this Graphics gr,DuoToneIcon icon, DuoToneColor iconcolor, float x, float baseline, IconSizeF iconSize)
     {
         return gr.DrawIconBaseline(icon, iconcolor, x, baseline, iconSize.Size);

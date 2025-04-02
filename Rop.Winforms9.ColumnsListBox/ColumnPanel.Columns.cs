@@ -57,6 +57,11 @@ public partial class ColumnPanel
     }
     private int _selectedcolumn = -1;
 
+    public void SetSelected(int selectedColumn, bool descending=false)
+    {
+        _setSelected(selectedColumn, descending?SortOrder.Descending:SortOrder.Ascending);
+    }
+
     private void _setSelected(int selectedColumn, SortOrder? selectedOrder)
     {
         var ori = _columns.FirstOrDefault(c => c.SortOrder != SortOrder.None);
@@ -102,7 +107,7 @@ public partial class ColumnPanel
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Rectangle ColumnBounds { get; private set; }
 
-    public (int,string)[] ActiveFilter=> _columns.Where(c=>c.ActiveFilter!="").Select(c =>(c.ColumnIndex,c.ActiveFilter)).ToArray();
+    public (int,IReadOnlySet<string>)[] ActiveFilter=> _columns.Where(c=>c.ActiveFilter.Count>0).Select(c =>(c.ColumnIndex,c.ActiveFilter)).ToArray();
 
     private void _doLayout()
     {

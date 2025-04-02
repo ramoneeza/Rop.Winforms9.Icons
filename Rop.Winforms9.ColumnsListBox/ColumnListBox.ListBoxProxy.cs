@@ -14,18 +14,21 @@ namespace Rop.Winforms9.ColumnsListBox;
 
 public partial class ColumnListBox
 {
-    public event EventHandler SelectedIndexChanged;
-    public event EventHandler<ItemClickEventArgs> ItemClick;
-    public event EventHandler<ItemColumnClickEventArgs> ItemColumnsClick;
-    public event EventHandler<DrawItemEventArgsEx> DrawItem;
+    public event EventHandler? SelectedIndexChanged;
+    public event EventHandler<ItemClickEventArgs>? ItemClick;
+    public event EventHandler<ItemColumnClickEventArgs>? ItemColumnsClick;
+    public event EventHandler<DrawItemEventArgsEx>? DrawItem;
     protected CompatibleListBox ListBox { get; }
-    private List<object> _items;
+    private List<object> _items=new();
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public IReadOnlyList<object> Items
     {
         get => _items;
         private set => _items = value.ToList();
     }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public CompatibleItems FilteredAndOrderedItems => ListBox.Items;
+
     public void SetItems(params IEnumerable<object> items)
     {
         _items = items.ToList();
@@ -74,12 +77,12 @@ public partial class ColumnListBox
     protected virtual void OnDrawItem(DrawItemEventArgs e)
     {
         var eex= new DrawItemEventArgsEx(e,BackColor,ItemBackgroundColor,ItemBackgroundColorAlt,ForeColor);
-        eex.Empty = (e.Index < 0 || e.Index >= Items.Count);
+        eex.Empty = (e.Index < 0 || e.Index >= ListBox.Items.Count);
         DrawItem?.Invoke(this, eex);
         if (eex.Handled) return;
         if (!eex.HandledBackground) eex.DrawBackground();
         if (eex.Empty) return;
-        var item = Items[eex.Index];
+        var item =ListBox.Items[eex.Index];
         var rect = eex.Bounds;
         var x = eex.Bounds.X;
         var cs = Header.Columns;
@@ -108,9 +111,9 @@ public partial class ColumnListBox
     {
         // obtain the index of the item clicked
         var index = ListBox.IndexFromPoint(e.Location);
-        if (index >= 0 && index < Items.Count)
+        if (index >= 0 && index < FilteredAndOrderedItems.Count)
         {
-            var item = Items[index];
+            var item = FilteredAndOrderedItems[index];
             var boundsitem = ListBox.GetItemRectangle(index);
             var arg = new ItemClickEventArgs(index, item,boundsitem, e.Button,e.Location);
             OnItemClick(arg);

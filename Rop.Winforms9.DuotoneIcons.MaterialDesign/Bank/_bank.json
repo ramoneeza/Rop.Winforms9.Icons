@@ -24453,6 +24453,17 @@
       "Alias": []
     },
     {
+      "Code": "CrossBold",
+      "Size": {
+        "Width": 96,
+        "Height": 96
+      },
+      "BaseLine": 96,
+      "IsNew": true,
+      "IsExtra": true,
+      "Alias": []
+    },
+    {
       "Code": "CrossBolnisi",
       "Size": {
         "Width": 96,
@@ -24527,6 +24538,17 @@
       "BaseLine": 93,
       "IsNew": false,
       "IsExtra": false,
+      "Alias": []
+    },
+    {
+      "Code": "CrossThin",
+      "Size": {
+        "Width": 96,
+        "Height": 96
+      },
+      "BaseLine": 96,
+      "IsNew": true,
+      "IsExtra": true,
       "Alias": []
     },
     {
@@ -29456,6 +29478,19 @@
       "IsNew": true,
       "IsExtra": false,
       "Alias": []
+    },
+    {
+      "Code": "Empty",
+      "Size": {
+        "Width": 96,
+        "Height": 96
+      },
+      "BaseLine": 89,
+      "IsNew": false,
+      "IsExtra": true,
+      "Alias": [
+        "_Empty"
+      ]
     },
     {
       "Code": "Engine",

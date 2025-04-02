@@ -19,6 +19,17 @@ public abstract partial class BaseEmbeddedIcons : IEmbeddedIcons
     public Size BaseSize { get; }
     public int Count => _charSet.Count;
     public DuoToneIcon? GetIcon(string name) => _charSet.GetValueOrDefault(name);
+
+    public Bitmap? GetImage(string code, DuoToneColor color, int size)
+    {
+        var icon = GetIcon(code);
+        if (icon == null) return null;
+        var bmp = new Bitmap(size, size);
+        using var gr= Graphics.FromImage(bmp);
+        gr.DrawIconFit(icon,color, 0, 0,size);
+        return bmp;
+    }
+
     public float DrawIcon(Graphics gr, string code, DuoToneColor iconcolor, float x, float y, float height)
     {
         var icon = GetIcon(code);

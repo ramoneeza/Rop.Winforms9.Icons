@@ -33,7 +33,7 @@ namespace Rop.Winforms9.DuotoneIcons.PartialControls
         }
 
         private DuoToneColor _iconColor;
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public virtual DuoToneColor IconColor
         {
             get => _iconColor;

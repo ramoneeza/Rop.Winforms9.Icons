@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using Rop.Helper;
 using Rop.Winforms9.DuotoneIcons;
 using Rop.Winforms9.DuotoneIcons.Controls;
 using Rop.Winforms9.DuotoneIcons.PartialControls;
@@ -14,7 +15,6 @@ public partial class ColumnListBox:Control
     public event EventHandler<SortItemsArg>? SortItems; 
     public event EventHandler<MouseCellOverArgs>? MouseCellOver;
     public event EventHandler<ColumnFilterClickArgs>? ColumnFilterClick;
-        
     private BorderStyle _borderStyle;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public BorderStyle BorderStyle
@@ -74,9 +74,10 @@ public partial class ColumnListBox:Control
         var newargs= new ColumnFilterClickArgs(e,Items);
         var old = e.ActiveFilter;
         ColumnFilterClick?.Invoke(this, newargs);
-        if (e.ActiveFilter != old)
+        var newaf = e.ActiveFilter.ToHashSet();
+        if (!newaf.SetEquals(old))
         {
-            e.Column.ActiveFilter = e.ActiveFilter;
+            e.Column.ActiveFilter = newaf;
             Header.Invalidate();
             IntListOrOrderOrFilterChanged();
         }
@@ -114,8 +115,8 @@ public partial class ColumnListBox:Control
         ListBox.BeginUpdate();
         ListBox.Items.Clear();
         ListBox.Items.AddRange(args.Items);
-        ListBox.EndUpdate();
         ListBox.SelectedKeyString = a;
+        ListBox.EndUpdate();
     }
 
     private void OnSortItems(SortItemsArg args)
@@ -171,6 +172,15 @@ public partial class ColumnListBox:Control
         var col = Header.GetColumn(column);
         if (col==null) return Array.Empty<string>();
         using var dlg = new ColumnPanelFilterBox(this,col.Bounds, items, multiselect,selecteditems);
+        dlg.ShowDialog();
+        return dlg.SelectedItems();
+    }
+    public IKeyValue[] ShowFilterDialog(int column, bool multiselect, IEnumerable<IKeyValue> items,
+        IEnumerable<IKeyValue> selecteditems)
+    {
+        var col = Header.GetColumn(column);
+        if (col==null) return [];
+        using var dlg = new ColumnPanelFilterKeyValue(this,col.Bounds, items, multiselect,selecteditems);
         dlg.ShowDialog();
         return dlg.SelectedItems();
     }

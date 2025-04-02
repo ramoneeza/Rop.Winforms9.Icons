@@ -29,9 +29,9 @@ public record ColumnPanelColumn
         }
     }
 
-    public string Text { get; private set; }
+    public string Text { get; private set; } = "";
     public bool Selectable { get; private set; }
-    public string ToolTipText { get; private set; }
+    public string ToolTipText { get; private set; } = "";
     public bool Filterable { get; private set; }
     public bool Resizable { get; private set; }
     public int ColumnIndex { get; internal set; }
@@ -51,7 +51,7 @@ public record ColumnPanelColumn
     public Rectangle FilterBounds { get; internal set; }
     public SortOrder SortOrder { get; internal set; } = SortOrder.None;
 
-    public string ActiveFilter { get; internal set; } = "";
+    public IReadOnlySet<string> ActiveFilter { get; internal set; } = new HashSet<string>();
     
     public ColumnPanelColumn(ColumnPanel parent, ColumnDefinition columnDefinition,int index)
     {

@@ -7,7 +7,7 @@ public class MouseCellOverArgs : EventArgs
     public int Column=> Cell.X;
     public object? Item { get; }
     public bool CanClick { get; set; }
-    public string ToolTip { get; set; }
+    public string ToolTip { get; set; } = "";
     public bool ToolTipRight { get; set; }
     public MouseCellOverArgs(Point cell,object? item)
     {

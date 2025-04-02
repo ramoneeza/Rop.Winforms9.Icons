@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Rop.Helper;
 using Rop.Winforms9.ColumnsListBox;
 using Rop.Winforms9.ListComboBox;
 
@@ -16,10 +17,10 @@ namespace ColumnListBoxTest
 
         private void ColumnListBox1_ColumnFilterClick(object? sender, ColumnFilterClickArgs e)
         {
-            var apellidos=e.Items.OfType<MiRecord>().Select(a => a.Apellidos).Distinct().ToArray();
-            var active = e.ActiveFilter.Split(',');
+            var apellidos=e.Items.OfType<MiRecord>().Select(a => a.Apellidos).Distinct().Select(a=>new FooKeyValue(a,a)).ToArray();
+            var active = e.ActiveFilter.Select(a=>new FooKeyValue(a,a));
             var res=columnListBox1.ShowFilterDialog(e.Column.ColumnIndex, true, apellidos, active);
-            e.ActiveFilter = string.Join(',', res);
+            e.ActiveFilter = res.Select(r=>r.GetKey()).ToArray();
         }
 
         private void ColumnListBox1_DrawColumns(object? sender, Rop.Winforms9.ColumnsListBox.DrawColumnsEventArgs e)
@@ -54,7 +55,7 @@ namespace ColumnListBoxTest
                 _ => preitems
             }).ToList();
             if (e.SelectedOrder == SortOrder.Descending) items.Reverse();
-            var activefilters=columnListBox1.ActiveFilters.Select(a => a.Split(',',StringSplitOptions.RemoveEmptyEntries)).ToArray();
+            var activefilters=columnListBox1.ActiveFilters.Select(a => a).ToArray();
             if (activefilters[2].Any())
             {
                 items = items.Where(a => activefilters[2].Contains(a.Apellidos)).ToList();

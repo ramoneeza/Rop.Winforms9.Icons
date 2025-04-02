@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <Title>Rop.Winforms9.DropControls</Title>
+	  <PackageTags>helper-classes;winform;dropcontrols</PackageTags>
+	  <Description>DropControls</Description>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Version>1.2.4</Version>
+	  <Authors>Ramon Ordiales Plaza</Authors>
+	  <Company>Ramon Ordiales Plaza</Company>
+	  <Copyright>2024 Ramon Ordiales</Copyright>
+	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+	  <RepositoryUrl>https://api.nuget.org/v3/index.json</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Art\arrow_right_icon_16.png" />
+    <None Remove="Art\attention_icon_16.png" />
+    <None Remove="Art\burst_icon_16.png" />
+    <None Remove="Art\cert_icon_16.png" />
+    <None Remove="Art\chess.png" />
+    <None Remove="Art\clipboard_copy_icon_16.png" />
+    <None Remove="Art\clipboard_copy_icon_16_black.png" />
+    <None Remove="Art\clipboard_past_icon_16.png" />
+    <None Remove="Art\delete_icon_16.png" />
+    <None Remove="Art\disconnected_icon_16.png" />
+    <None Remove="Art\open_folder_icon_16.png" />
+    <None Remove="Art\open_folder_icon_16_white.png" />
+    <None Remove="Art\rename_16.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Art\arrow_right_icon_16.png" />
+    <EmbeddedResource Include="Art\attention_icon_16.png" />
+    <EmbeddedResource Include="Art\burst_icon_16.png" />
+    <EmbeddedResource Include="Art\cert_icon_16.png" />
+    <EmbeddedResource Include="Art\chess.png" />
+    <EmbeddedResource Include="Art\empty_icon_16.png" />
+    <EmbeddedResource Include="Art\clipboard_copy_icon_16.png" />
+    <EmbeddedResource Include="Art\clipboard_copy_icon_16_black.png" />
+    <EmbeddedResource Include="Art\clipboard_past_icon_16_black.png" />
+    <EmbeddedResource Include="Art\clipboard_past_icon_16_black_arrowred.png" />
+    <EmbeddedResource Include="Art\clipboard_past_icon_16_red.png" />
+    <EmbeddedResource Include="Art\clipboard_past_icon_16.png" />
+    <EmbeddedResource Include="Art\delete_icon_16_black.png" />
+    <EmbeddedResource Include="Art\delete_icon_16.png" />
+    <EmbeddedResource Include="Art\disconnected_icon_16.png" />
+    <EmbeddedResource Include="Art\open_folder_icon_16.png" />
+    <EmbeddedResource Include="Art\open_folder_icon_16_white.png" />
+    <EmbeddedResource Include="Art\rename_16.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rop.Results9" Version="1.2.3" />
+    <PackageReference Include="Rop.Windows9.Bitmaps" Version="1.0.0" />
+    <PackageReference Include="Rop.Winforms9.FontsEx" Version="1.0.2" />
+    <PackageReference Include="Rop.Winforms9.GraphicsEx" Version="1.0.4" />
+    <PackageReference Include="Rop.Winforms9.Helper" Version="1.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.9" />
+    <PackageReference Include="Svg.Skia" Version="2.0.0.2" />
+  </ItemGroup>
+
+</Project>
